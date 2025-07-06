@@ -292,9 +292,16 @@ export const PROJECTS = [
   {
     title: "Secure Note Taking App",
     description:
-      "DeepNet is a Rust-based cybersecurity toolkit designed to provide low-level packet inspection, custom scanning, and intelligent threat surface analysis. Built with performance and precision in mind, DeepNet leverages raw packet crafting, efficient parallelism, and protocol-aware parsing to identify open ports, suspicious behavior, and potential vulnerabilities. The project supports multiple scanning modes (TCP SYN, TCP Connect, UDP) and interfaces directly with network hardware via pnet_datalink, making it ideal for systems where precision and speed matter — such as embedded defense appliances or high-performance monitoring agents.",
+      "A secure note-taking app built with React.js and SpringBoot. It allows users to create, read, update, and delete notes while ensuring data is stored securely with a great cryptographic application which have a certificate authority and great key management.",
     image: "https://img.youtube.com/vi/QkF1usPAFcA/hqdefault.jpg",
     link: "https://github.com/HenokEshetu/notetakingappfrontend",
+  },
+  {
+    title: "Portfolio Website",
+    description:
+      "A personal portfolio website built with Next.js and Tailwind CSS. It showcases my projects, skills, and experience in a visually appealing and interactive manner.",
+    image: "/portfolio.png",
+    link: "https://github.com/HenokEshetu/Portfolio",
   },
 ] as const;
 
