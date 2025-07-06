@@ -2,6 +2,8 @@
 
 A visually stunning, accessible, and modern portfolio built with Next.js (App Router), React, and Tailwind CSS. This project showcases advanced skills in full-stack development, cybersecurity, automation, and infrastructure engineering, with a focus on narrative-driven blog content and beautiful, responsive design.
 
+<img src="https://github.com/HenokEshetu/Portfolio/blob/master/public/portfolio.png?raw=true" width="100%" alt="" />
+
 ## Features
 
 - **Next.js App Directory**: Utilizes the latest Next.js features for fast, scalable, and maintainable routing.
