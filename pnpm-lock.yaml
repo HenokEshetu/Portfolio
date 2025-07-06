@@ -26,6 +26,9 @@ importers:
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
+      maath:
+        specifier: ^0.10.8
+        version: 0.10.8(@types/three@0.178.0)(three@0.160.1)
       next:
         specifier: 14.2.15
         version: 14.2.15(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -47,9 +50,6 @@ importers:
       tailwind-merge:
         specifier: ^2.2.0
         version: 2.6.0
-      three:
-        specifier: ^0.160.0
-        version: 0.160.1
     devDependencies:
       '@types/node':
         specifier: ^20
@@ -60,6 +60,9 @@ importers:
       '@types/react-dom':
         specifier: ^18
         version: 18.3.7(@types/react@18.3.23)
+      '@types/three':
+        specifier: ^0.178.0
+        version: 0.178.0
       autoprefixer:
         specifier: ^10.0.1
         version: 10.4.21(postcss@8.5.6)
@@ -75,6 +78,9 @@ importers:
       tailwindcss:
         specifier: ^3.3.0
         version: 3.4.17
+      three:
+        specifier: ^0.160.1
+        version: 0.160.1
       typescript:
         specifier: ^5
         version: 5.8.3

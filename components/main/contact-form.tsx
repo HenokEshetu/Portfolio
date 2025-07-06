@@ -100,7 +100,7 @@ export const ContactForm = () => {
         {error && <p className="text-red-400 text-sm text-center">{error}</p>}
         {submitted ? (
           <p className="text-green-400 text-center">
-            Thank you for reaching out! I'll get back to you soon.
+            Thank you for reaching out! I&apos;ll get back to you soon.
           </p>
         ) : (
           <button
