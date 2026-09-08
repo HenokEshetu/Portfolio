@@ -1,97 +1,91 @@
-# Portfolio
+# Henok Eshetu — Portfolio
 
-A visually stunning, accessible, and modern portfolio built with Next.js (App Router), React, and Tailwind CSS. This project showcases advanced skills in full-stack development, cybersecurity, automation, and infrastructure engineering, with a focus on narrative-driven blog content and beautiful, responsive design.
+Portfolio and writing of [Henok Eshetu](https://github.com/HenokEshetu), security
+engineer and full-stack developer.
 
-<img src="https://github.com/HenokEshetu/Portfolio/blob/master/public/portfolio.png?raw=true" width="100%" alt="" />
+**Live:** https://henokeshetuportfolio.vercel.app
 
-## Features
+## Stack
 
-- **Next.js App Directory**: Utilizes the latest Next.js features for fast, scalable, and maintainable routing.
-- **Static Blog System**: All blog posts are statically routed and rendered as `.tsx` React components for maximum performance and SEO.
-- **Elegant UI/UX**: Custom, accessible layouts with hidden scrollbars, soft dark backgrounds, high-contrast text, and accent colors for a comfortable reading experience.
-- **Responsive Design**: Fully responsive across devices, with wide content areas, generous spacing, and modern typography.
-- **Narrative Blog Content**: Each blog post is a long-form, essay-style narrative, covering topics such as cryptography, virtualization, full-stack automation, scripting, network security, penetration testing, and threat intelligence.
-- **Image-Rich**: All referenced images are present and optimized for fast loading and accessibility.
-- **Consistent Navigation**: Clean, intuitive navigation with proper margins and spacing to account for the navbar.
-- **Accessible**: Follows best practices for color contrast, keyboard navigation, and semantic HTML.
+| | |
+|---|---|
+| Framework | Next.js 16 (App Router, Turbopack) |
+| Language | TypeScript 5.9, React 19 |
+| Styling | Tailwind CSS 4 (CSS-first `@theme` tokens) |
+| Email | Resend |
+| Package manager | pnpm |
+| Hosting | Vercel |
 
-## Blog Topics
+Every page except the contact endpoint is statically generated.
 
-- **Cryptography in Practice**: Securing Data in a Digital World
-- **Data Center Virtualization & Infrastructure Design**: Powering the Modern Enterprise
-- **Full Stack Development & Automation**: Building Secure, Scalable Systems
-- **Languages & Scripting**: The Power of Polyglot Programming in Cybersecurity
-- **Network Security Engineering**: Building Resilient Digital Fortresses
-- **Penetration Testing & System Engineering**: Breaking to Build Stronger Systems
-- **Threat Intelligence & SOC Analysis**: Staying Ahead of Cyber Threats
+## Editing content
 
-Each blog post is statically routed and features:
+All content lives in `content/` — no component changes needed to update the site.
 
-- A wide, comfortable reading area
-- Hidden scrollbars for a clean look
-- Large, readable headings and accent colors
-- Narrative, paragraph-style content (no short lists or sections)
-- Consistent date formatting matching the blog index
+| File | Holds |
+|---|---|
+| `content/profile.ts` | Bio, experience, education, certifications, skills, socials, nav |
+| `content/projects.ts` | Projects and their case-study copy (`/work/<slug>`) |
+| `content/posts.ts` | Blog posts (`/blog/<slug>`) |
 
-## Tech Stack
+Adding a project or post to the relevant array is enough: the route, the sitemap
+entry, and the listing all follow automatically.
 
-- **Framework**: Next.js (App Router)
-- **Language**: TypeScript, React
-- **Styling**: Tailwind CSS, custom classes for accessibility and aesthetics
-- **Image Optimization**: next/image
-- **Content**: All blog posts as `.tsx` files for static, file-based routing
+### Résumé
 
-## Getting Started
+`profile.resumeUrl` is `null` by default, which hides the Résumé buttons. To
+enable them, drop the PDF at `public/henok-eshetu-cv.pdf` and set:
 
-1. **Install dependencies**
-   ```sh
-   pnpm install
-   # or
-   npm install
-   # or
-   yarn install
-   ```
-2. **Run the development server**
-   ```sh
-   pnpm dev
-   # or
-   npm run dev
-   # or
-   yarn dev
-   ```
-3. **Open your browser**
-   Visit [http://localhost:3000](http://localhost:3000) to view the portfolio.
+```ts
+resumeUrl: "/henok-eshetu-cv.pdf",
+```
 
-## Project Structure
+## Local development
 
-- `app/` — Next.js app directory
-  - `blog/` — All blog posts as `.tsx` files and static `[slug]/page.tsx` for routing
-  - `components/` — Reusable UI components (navbar, hero, skills, projects, etc.)
-  - `public/` — Static assets (images, videos)
-- `constants/`, `config/`, `lib/` — Project configuration and utilities
-- `tailwind.config.ts` — Tailwind CSS configuration
-- `README.md` — This file
+```bash
+pnpm install
+cp .env.example .env.local   # add RESEND_API_KEY to test the contact form
+pnpm dev
+```
 
-## Accessibility & Best Practices
+| Script | Does |
+|---|---|
+| `pnpm dev` | Development server |
+| `pnpm build` | Production build |
+| `pnpm start` | Serve the production build |
+| `pnpm lint` | ESLint |
+| `pnpm typecheck` | `tsc --noEmit` |
 
-- All colors and backgrounds are chosen for high contrast and comfort
-- Headings use semantic HTML and accent colors
-- Images include descriptive alt text
-- Scrollbars are hidden for aesthetics but content remains accessible
-- Responsive and mobile-friendly design
+## Environment variables
 
-## Contributing
+| Variable | Required | Purpose |
+|---|---|---|
+| `RESEND_API_KEY` | Yes, for the contact form | Without it the form returns an honest error rather than silently discarding the message |
+| `CONTACT_FROM_EMAIL` | No | Sender address; defaults to Resend's shared sender |
+| `CONTACT_TO_EMAIL` | No | Recipient; defaults to the address in `content/profile.ts` |
 
-Contributions are welcome! Please see `CONTRIBUTING.md` for guidelines.
+## Design and accessibility notes
 
-## License
+- **One accent on a neutral ramp.** Colour tokens are defined once in
+  `app/globals.css` under `@theme`. Every foreground token clears WCAG AA
+  against both the page background and the card surface.
+- **Animation is CSS-only.** Entrances use keyframes; scroll reveals use
+  `animation-timeline: view()`. The default state of every element is *visible*,
+  so slow JS, failed hydration, or a browser without scroll-driven animations
+  never hides content. All of it is disabled under
+  `prefers-reduced-motion: reduce`.
+- **No render-blocking media.** The hero backdrop is two CSS gradients rather
+  than video or a WebGL canvas.
+- Semantic landmarks, a skip link, labelled form controls, `aria-live` status
+  messaging, and visible focus rings throughout.
 
-This project is licensed under the MIT License. See `LICENSE` for details.
+## Security
 
-## Author
+- Contact submissions are validated with Zod, rate limited per IP, and screened
+  by a honeypot field; all interpolated values are HTML-escaped.
+- `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, and
+  `Permissions-Policy` are set in `next.config.ts`.
 
-Henok Eshetu
+## Licence
 
----
-
-> "Building secure, beautiful, and accessible digital experiences."
+MIT — see [LICENSE](./LICENSE).

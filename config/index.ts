@@ -1,41 +1,50 @@
 import type { Metadata } from "next";
 
+import { profile } from "@/content/profile";
+
+export const siteUrl = "https://henokeshetuportfolio.vercel.app";
+
+const description =
+  "Henok Eshetu is a security engineer and full-stack developer building SIEM, threat-intelligence, and detection platforms in Rust, Go, and TypeScript.";
+
 export const siteConfig: Metadata = {
-  title: "Henok Eshetu | Cyber Security Professional | Fullstack Developer",
-  description: "Welcome to my full stack Next.js 14 portfolio.",
-  keywords: [
-    "reactjs",
-    "nextjs",
-    "vercel",
-    "react",
-    "space-portfolio",
-    "portfolio",
-    "react-icons",
-    "cn",
-    "clsx",
-    "3d-portfolio",
-    "3d-website",
-    "sonner",
-    "framer-motion",
-    "motion",
-    "animation",
-    "heroicons",
-    "next-themes",
-    "postcss",
-    "prettier",
-    "react-dom",
-    "tailwindcss",
-    "tailwindcss-animate",
-    "ui/ux",
-    "js",
-    "javascript",
-    "typescript",
-    "eslint",
-    "html",
-    "css",
-  ] as Array<string>,
-  authors: {
-    name: "Sanidhya Kumar Verma",
-    url: "https://github.com/sanidhyy",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: `${profile.name} — ${profile.role}`,
+    template: `%s · ${profile.name}`,
   },
-} as const;
+  description,
+  keywords: [
+    "Henok Eshetu",
+    "security engineer",
+    "SIEM engineering",
+    "threat intelligence",
+    "detection engineering",
+    "penetration testing",
+    "Rust backend",
+    "Go",
+    "network security",
+    "full-stack developer",
+    "Ethiopia",
+  ],
+  authors: [{ name: profile.name, url: "https://github.com/HenokEshetu" }],
+  creator: profile.name,
+  openGraph: {
+    type: "profile",
+    locale: "en_US",
+    url: siteUrl,
+    siteName: `${profile.name} — Portfolio`,
+    title: `${profile.name} — ${profile.role}`,
+    description,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${profile.name} — ${profile.role}`,
+    description,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+  },
+};

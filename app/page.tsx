@@ -1,17 +1,21 @@
-import { Encryption } from "@/components/main/encryption";
-import { Hero } from "@/components/main/hero";
-import { Projects } from "@/components/main/projects";
-import { Skills } from "@/components/main/skills";
+import { About } from "@/components/sections/about";
+import { Contact } from "@/components/sections/contact";
+import { Credentials } from "@/components/sections/credentials";
+import { Experience } from "@/components/sections/experience";
+import { Hero } from "@/components/sections/hero";
+import { Skills } from "@/components/sections/skills";
+import { Work } from "@/components/sections/work";
 
 export default function Home() {
   return (
-    <main className="h-full w-full">
-      <div className="flex flex-col gap-20">
-        <Hero />
-        <Skills />
-        <Encryption />
-        <Projects />
-      </div>
-    </main>
+    <>
+      <Hero />
+      <About />
+      <Experience />
+      <Work />
+      <Skills />
+      <Credentials />
+      <Contact />
+    </>
   );
 }
