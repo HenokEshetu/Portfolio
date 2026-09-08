@@ -10,8 +10,10 @@ const ContactSchema = z.object({
   name: z.string().trim().min(2, "Name is too short").max(100),
   email: z.email("Enter a valid email address").max(200),
   message: z.string().trim().min(20, "Tell me a bit more").max(5000),
-  // Honeypot: real people leave this empty, naive bots fill it in.
-  company: z.string().max(0).optional(),
+  // Honeypot: real people leave this empty, naive bots fill it in. Accept any
+  // value here so the rejection happens silently below rather than in a
+  // validation error that tells the bot exactly what tripped it.
+  company: z.string().max(200).optional(),
 });
 
 /**
