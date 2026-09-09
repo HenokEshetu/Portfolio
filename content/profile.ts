@@ -12,7 +12,7 @@ export const profile = {
     "I build threat-intelligence and detection platforms — and the secure, high-throughput systems underneath them.",
   location: "Addis Ababa, Ethiopia",
   availability: "Open to collaboration",
-  email: "henok@betatechhub.com",
+  email: "henok.eshetu.2025@proton.me",
   /**
    * Drop the PDF at public/henok-eshetu-cv.pdf and set this to
    * "/henok-eshetu-cv.pdf". While it is null the Resume buttons are hidden,
