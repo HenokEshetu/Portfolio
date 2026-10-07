@@ -15,7 +15,7 @@ export const profile = {
     "I lead SIEM development at Beta Tech Hub, building a multi-tenant SIEM/XDR platform: UEBA, threat intelligence, case management and agentic AI for the SOC, plus the DevSecOps pipeline that ships it to Kubernetes.",
   location: "Addis Ababa, Ethiopia",
   timezone: "Africa/Addis_Ababa",
-  availability: "Open to security engineering roles & collaboration",
+  availability: "Leading SIEM development @ Beta Tech Hub",
   email: "henokeshetu2024@gmail.com",
   phone: "+251 923 469 211",
   portrait: "/henok-portrait.jpg",
