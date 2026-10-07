@@ -82,14 +82,16 @@ export default async function BlogPostPage({ params }: PageProps) {
         </div>
 
         {next && next.slug !== post.slug ? (
-          <nav className="mt-20 border-t border-line pt-10">
-            <p className="eyebrow text-fg-subtle">Next post</p>
+          <nav aria-label="Next post" className="mt-20 border-t border-line pt-10">
             <Link
               href={`/blog/${next.slug}`}
-              className="group mt-4 flex items-center justify-between gap-6"
+              className="card-surface spotlight glow-border group flex items-center justify-between gap-6 p-6"
             >
-              <span className="max-w-2xl text-h3 font-semibold text-fg transition-colors group-hover:text-accent">
-                {next.title}
+              <span>
+                <span className="eyebrow text-fg-subtle">Next post · {next.topic}</span>
+                <span className="mt-2 block max-w-2xl font-display text-h3 font-semibold text-fg transition-colors group-hover:text-accent-bright">
+                  {next.title}
+                </span>
               </span>
               <ArrowUpRight
                 aria-hidden

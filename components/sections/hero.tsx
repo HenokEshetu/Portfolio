@@ -96,7 +96,7 @@ export const Hero = () => (
             <ArrowRight aria-hidden className="size-4 transition-transform group-hover:translate-x-0.5" />
           </Link>
           {profile.resumeUrl ? (
-            <a href={profile.resumeUrl} target="_blank" rel="noopener" className="btn-ghost">
+            <a href={profile.resumeUrl} download="Henok_Eshetu_CV.pdf" className="btn-ghost">
               <FileDown aria-hidden className="size-4" />
               Download CV
             </a>

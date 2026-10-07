@@ -20,7 +20,7 @@ export const profile = {
   phone: "+251 923 469 211",
   portrait: "/henok-portrait.jpg",
   /** Set to null to hide every Résumé button. */
-  resumeUrl: "/henok-eshetu-cv.pdf" as string | null,
+  resumeUrl: "/Henok_Eshetu_CV.pdf" as string | null,
 } as const;
 
 /** Small verifiable facts shown under the hero. */

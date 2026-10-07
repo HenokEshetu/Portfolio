@@ -9,6 +9,10 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
   },
   poweredByHeader: false,
+  async redirects() {
+    // The CV used to live at a lower-case path; keep old links working.
+    return [{ source: "/henok-eshetu-cv.pdf", destination: "/Henok_Eshetu_CV.pdf", permanent: true }];
+  },
   async headers() {
     return [
       {

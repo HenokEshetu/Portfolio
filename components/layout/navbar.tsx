@@ -2,6 +2,7 @@
 
 import { Command, FileDown, Menu, X } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { OPEN_PALETTE_EVENT } from "@/components/ui/command-palette";
@@ -11,9 +12,52 @@ import { cn } from "@/lib/utils";
 
 const openPalette = () => window.dispatchEvent(new Event(OPEN_PALETTE_EVENT));
 
+const SECTION_IDS = navLinks
+  .map((link) => link.href.split("#")[1])
+  .filter((id): id is string => Boolean(id));
+
+/** Which home-page section is in view, for highlighting the matching nav link. */
+const useActiveSection = (enabled: boolean) => {
+  const [active, setActive] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!enabled) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        }
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+    for (const id of SECTION_IDS) {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    }
+    const onTop = () => {
+      if (window.scrollY < 200) setActive(null);
+    };
+    window.addEventListener("scroll", onTop, { passive: true });
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", onTop);
+    };
+  }, [enabled]);
+
+  return enabled ? active : null;
+};
+
 export const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const active = useActiveSection(pathname === "/");
+
+  const isCurrent = (href: string) => {
+    const id = href.split("#")[1];
+    if (id) return active === id;
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -59,19 +103,38 @@ export const Navbar = () => {
         </Link>
 
         <ul className="hidden items-center gap-0.5 lg:flex">
-          {navLinks.map((link, i) => (
-            <li key={link.title}>
-              <Link
-                href={link.href}
-                className="group rounded-lg px-3 py-2 text-[13.5px] text-fg-muted transition-colors hover:bg-ink-800/70 hover:text-fg"
-              >
-                <span className="mr-1 font-mono text-[10px] text-fg-subtle transition-colors group-hover:text-accent">
-                  0{i + 1}
-                </span>
-                {link.title}
-              </Link>
-            </li>
-          ))}
+          {navLinks.map((link, i) => {
+            const current = isCurrent(link.href);
+            return (
+              <li key={link.title}>
+                <Link
+                  href={link.href}
+                  aria-current={current ? "page" : undefined}
+                  className={cn(
+                    "group relative rounded-lg px-3 py-2 text-[13.5px] transition-colors hover:bg-ink-800/70 hover:text-fg",
+                    current ? "text-fg" : "text-fg-muted"
+                  )}
+                >
+                  <span
+                    className={cn(
+                      "mr-1 font-mono text-[10px] transition-colors group-hover:text-accent",
+                      current ? "text-accent" : "text-fg-subtle"
+                    )}
+                  >
+                    0{i + 1}
+                  </span>
+                  {link.title}
+                  <span
+                    aria-hidden
+                    className={cn(
+                      "absolute inset-x-3 -bottom-px h-px origin-left bg-linear-to-r from-accent to-signal transition-transform duration-300",
+                      current ? "scale-x-100" : "scale-x-0"
+                    )}
+                  />
+                </Link>
+              </li>
+            );
+          })}
         </ul>
 
         <div className="flex items-center gap-1.5">

@@ -10,6 +10,18 @@ export type CaseStudySection = {
   body: readonly string[];
 };
 
+export type Shot = {
+  src: string;
+  alt: string;
+  caption: string;
+  width: number;
+  height: number;
+  /** Window chrome to draw around the image. */
+  frame?: "browser" | "desktop";
+  /** Address shown in the browser frame. */
+  url?: string;
+};
+
 export type Project = {
   slug: string;
   title: string;
@@ -22,6 +34,12 @@ export type Project = {
   /** Small factual stats shown on the case-study page. Keep these verifiable. */
   facts?: readonly { label: string; value: string }[];
   links?: readonly { label: string; href: string }[];
+  /** Real screenshots of the running software. The first one is the cover. */
+  gallery?: readonly Shot[];
+  /** Where the screenshots come from, shown under the gallery. */
+  galleryNote?: string;
+  /** Drawn cover for projects without public screenshots. */
+  visual?: "chess" | "terminal";
   caseStudy: readonly CaseStudySection[];
 };
 
@@ -30,7 +48,7 @@ export const projects: readonly Project[] = [
     slug: "cti-platform",
     title: "Real-Time Cyber Threat Intelligence Platform",
     summary:
-      "My BSc final-year project: a STIX 2.1 threat-intelligence platform that ingests and enriches feeds, streams updates to analysts in real time, and turns indicators into Suricata IDS rules automatically.",
+      "ዳጉ (Dagu), my BSc final-year project: a STIX 2.1 threat-intelligence platform that ingests and enriches feeds, streams updates to analysts in real time, and turns indicators into Suricata IDS rules automatically.",
     year: "2024 — 2025",
     role: "Final-year project · lead developer",
     stack: ["NestJS", "GraphQL", "PostgreSQL", "Redis", "OpenSearch", "React 19", "Python", "Suricata"],
@@ -46,6 +64,13 @@ export const projects: readonly Project[] = [
       { label: "Frontend", href: "https://github.com/HenokEshetu/Real-time_Threat_Intelligence_Frontend" },
       { label: "Suricata bridge", href: "https://github.com/HenokEshetu/Real-time_Threat_Intelligence_Suricata" },
     ],
+    gallery: [
+      { src: "/work/cti-platform/dashboard.webp", alt: "ዳጉ CTI dashboard with counters, threat map and distribution charts", caption: "Analyst dashboard: live counters, world threat map and campaign/intrusion-set trends.", width: 1600, height: 962, frame: "browser", url: "dagu.cti/dashboard" },
+      { src: "/work/cti-platform/dashboard-analytics.webp", alt: "Industry-targeted threats, platform distributions and security reports", caption: "Industry targeting, platform distributions and the latest security reports.", width: 1600, height: 962, frame: "browser", url: "dagu.cti/dashboard#analytics" },
+      { src: "/work/cti-platform/domain-names.webp", alt: "Domain-name observables table with markings and enrichment labels", caption: "STIX cyber-observables: 678 domain names with TLP markings and enrichment verdicts.", width: 1600, height: 962, frame: "browser", url: "dagu.cti/observables/domain-names" },
+      { src: "/work/cti-platform/ipv4-detail.webp", alt: "IPv4 observable detail with geolocation, verdict scores and external references", caption: "IPv4 detail: geolocation, enrichment verdicts and Hybrid Analysis references.", width: 1600, height: 962, frame: "browser", url: "dagu.cti/observables/ipv4-addresses/172.64.149.23" },
+    ],
+    galleryNote: "Screenshots of the production build from the project README, showing real ingested threat data.",
     caseStudy: [
       {
         heading: "The problem",
@@ -90,6 +115,13 @@ export const projects: readonly Project[] = [
       { label: "Web", href: "https://github.com/RustyHenok/fluxa-web" },
       { label: "Mobile", href: "https://github.com/RustyHenok/fluxa-mobile" },
     ],
+    gallery: [
+      { src: "/work/fluxa/overview.webp", alt: "Fluxa workspace overview with tenant summary and task pulse", caption: "Tenant overview: live summary counters, recent task pulse and focus areas.", width: 1600, height: 1000, frame: "browser", url: "fluxa.app" },
+      { src: "/work/fluxa/tasks.webp", alt: "Fluxa contract-aware task dashboard", caption: "Task dashboard driven by the generated OpenAPI client and cursor pagination.", width: 1600, height: 1000, frame: "browser", url: "fluxa.app/tasks" },
+      { src: "/work/fluxa/projects.webp", alt: "Fluxa project workspace with project creation form", caption: "Tenant-scoped project hierarchy with inline creation.", width: 1600, height: 1000, frame: "browser", url: "fluxa.app/projects" },
+      { src: "/work/fluxa/login.webp", alt: "Fluxa sign-in screen", caption: "Sign-in through the cookie-backed BFF, so the browser never holds the refresh token.", width: 1600, height: 1000, frame: "browser", url: "fluxa.app/login" },
+    ],
+    galleryNote: "Captured from the real Next.js web app, running against a local mock of the Fluxa API with demo data.",
     caseStudy: [
       {
         heading: "Why build it",
@@ -120,6 +152,7 @@ export const projects: readonly Project[] = [
       { label: "Ratings", value: "Glicko-2 per time control" },
       { label: "Transport", value: "HTTPS and WSS only, never plaintext" },
     ],
+    visual: "chess",
     caseStudy: [
       {
         heading: "The interesting part is the network",
@@ -154,6 +187,10 @@ export const projects: readonly Project[] = [
     links: [
       { label: "Source", href: "https://github.com/HenokEshetu/Syslog_Analyzer" },
     ],
+    gallery: [
+      { src: "/work/syslog-analyzer/dashboard.webp", alt: "Syslog security dashboard with log volume, alerts, timeline and log explorer", caption: "Security dashboard: log volume, alert severities, top sources, a 24-hour timeline and the log explorer.", width: 1600, height: 1000, frame: "browser", url: "localhost:5000" },
+    ],
+    galleryNote: "Captured from the real dashboard template with its JSON API returning demo data.",
     caseStudy: [
       {
         heading: "The problem",
@@ -192,6 +229,12 @@ export const projects: readonly Project[] = [
       { label: "Language", value: "100% Rust" },
     ],
     links: [{ label: "Source", href: "https://github.com/HenokEshetu/DeepNet" }],
+    gallery: [
+      { src: "/work/deepnet/packet-crafter.webp", alt: "DeepNet packet crafter tab", caption: "Packet crafter: hand-built TCP/UDP packets with custom payload, count and delay.", width: 1200, height: 370, frame: "desktop", url: "DeepNet — Packet Crafter" },
+      { src: "/work/deepnet/port-scanner.webp", alt: "DeepNet port scanner tab", caption: "Port scanner: target, port range, scan type (TCP SYN, connect, UDP) and thread count.", width: 1200, height: 320, frame: "desktop", url: "DeepNet — Advanced Network Toolkit" },
+      { src: "/work/deepnet/packet-sniffer.webp", alt: "DeepNet packet sniffer tab", caption: "Packet sniffer: interface selection and BPF filters.", width: 1200, height: 230, frame: "desktop", url: "DeepNet — Packet Sniffer" },
+    ],
+    galleryNote: "Captured from a release build of the egui desktop app.",
     caseStudy: [
       {
         heading: "Why build another scanner",
@@ -229,6 +272,11 @@ export const projects: readonly Project[] = [
         href: "https://github.com/HenokEshetu/notetakingappcrtauth",
       },
     ],
+    gallery: [
+      { src: "/work/secure-notes/notes.webp", alt: "Secure notes workspace with note cards", caption: "Notes workspace: per-user notes behind JWT auth.", width: 1600, height: 1000, frame: "browser", url: "localhost:5173/home" },
+      { src: "/work/secure-notes/login.webp", alt: "Secure notes sign-in screen", caption: "Sign-in and registration.", width: 1600, height: 1000, frame: "browser", url: "localhost:5173" },
+    ],
+    galleryNote: "Captured from the real React frontend, with the API mocked and demo notes.",
     caseStudy: [
       {
         heading: "The problem",
@@ -265,6 +313,7 @@ export const projects: readonly Project[] = [
         href: "https://github.com/HenokEshetu/System-Engineer-Automation-tools",
       },
     ],
+    visual: "terminal",
     caseStudy: [
       {
         heading: "The problem",

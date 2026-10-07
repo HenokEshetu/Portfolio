@@ -34,7 +34,7 @@ entry, and the listing all follow automatically.
 
 ### Résumé
 
-The CV lives at `public/henok-eshetu-cv.pdf` and `profile.resumeUrl` points to
+The CV lives at `public/Henok_Eshetu_CV.pdf` and `profile.resumeUrl` points to
 it. Set `resumeUrl` to `null` to hide every Résumé button.
 
 ## Page anatomy
@@ -49,9 +49,15 @@ it. Set `resumeUrl` to `null` to hide every Résumé button.
 | Work | `components/sections/work.tsx` | Terminal-window case-study cards plus an `ls -la ~/lab` table |
 | Credentials | `components/sections/credentials.tsx` | Education, certifications and their status, languages |
 | Contact | `components/sections/contact.tsx` | Contact form styled as a terminal |
+| Case studies | `app/work/[slug]/page.tsx` | Cover in window chrome, sticky table of contents with scrollspy, screenshot gallery with a keyboard-navigable lightbox, and previous/next cards |
+
+Screenshots live in `public/work/<slug>/` as WebP and are listed in each project's
+`gallery` in `content/projects.ts`; the first one becomes the cover. Projects without
+public screenshots set `visual` to `"chess"` or `"terminal"` to get a drawn cover instead.
 
 Press <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>K</kbd> anywhere to open the command palette
-(`components/ui/command-palette.tsx`).
+(`components/ui/command-palette.tsx`). A scroll-progress hairline and a back-to-top
+ring both use CSS scroll timelines, and the navbar highlights the section in view.
 
 ## Local development
 

@@ -4,7 +4,9 @@ import type { PropsWithChildren } from "react";
 
 import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
+import { BackToTop } from "@/components/ui/back-to-top";
 import { CommandPalette } from "@/components/ui/command-palette";
+import { ReadingProgress } from "@/components/ui/reading-progress";
 import { SpotlightTracker } from "@/components/ui/spotlight-tracker";
 import { siteConfig, siteUrl } from "@/config";
 import { profile, socials } from "@/content/profile";
@@ -97,10 +99,14 @@ export default function RootLayout({ children }: PropsWithChildren) {
           />
         </div>
 
+        <ReadingProgress />
         <Navbar />
-        <main id="main">{children}</main>
+        <main id="main" tabIndex={-1} className="outline-none">
+          {children}
+        </main>
         <Footer />
 
+        <BackToTop />
         <CommandPalette />
         <SpotlightTracker />
 

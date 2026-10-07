@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
+import { ProjectCover } from "@/components/work/project-cover";
 import { lab } from "@/content/profile";
 import { projects } from "@/content/projects";
 import { cn } from "@/lib/utils";
@@ -26,17 +27,27 @@ export const Work = () => (
               className="terminal spotlight glow-border group relative flex h-full flex-col overflow-hidden transition-transform duration-500 hover:-translate-y-1"
             >
               <div className="flex items-center gap-2 border-b border-line px-4 py-2.5">
-                <span className="size-2.5 rounded-full bg-danger/70" />
-                <span className="size-2.5 rounded-full bg-warn/70" />
-                <span className="size-2.5 rounded-full bg-accent/70" />
-                <span className="ml-2 truncate font-mono text-[11px] text-fg-subtle">
+                <span className="text-accent font-mono text-[11px]">❯</span>
+                <span className="truncate font-mono text-[11px] text-fg-subtle">
                   ~/projects/<span className="text-fg-muted">{project.slug}</span>
                 </span>
                 <span className="ml-auto shrink-0 font-mono text-[11px] text-fg-subtle">{project.year}</span>
               </div>
 
+              {!hero ? (
+                <div className="relative h-48 overflow-hidden border-b border-line bg-ink-900 px-5 pt-5 sm:h-56">
+                  <ProjectCover
+                    project={project}
+                    compact
+                    sizes="(min-width: 768px) 560px, 100vw"
+                    className="origin-top transition-transform duration-700 group-hover:-translate-y-1 group-hover:scale-[1.02]"
+                  />
+                  <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-linear-to-t from-ink-900 to-transparent" />
+                </div>
+              ) : null}
+
               <div className={cn("flex flex-1 flex-col p-6 sm:p-7", hero && "lg:flex-row lg:gap-10")}>
-                <div className={cn("flex flex-1 flex-col", hero && "lg:max-w-[60%]")}>
+                <div className={cn("flex flex-1 flex-col", hero && "lg:max-w-[46%]")}>
                   <p className="font-mono text-[11px] tracking-wide text-accent">{project.role}</p>
                   <h3
                     className={cn(
@@ -50,6 +61,17 @@ export const Work = () => (
                     {project.summary}
                   </p>
 
+                  {hero && project.facts ? (
+                    <dl className="mt-6 grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+                      {project.facts.map((fact) => (
+                        <div key={fact.label} className="bg-ink-900 px-3.5 py-3">
+                          <dt className="font-mono text-[10px] tracking-wider text-fg-subtle uppercase">{fact.label}</dt>
+                          <dd className="mt-1 text-[13px] text-fg">{fact.value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  ) : null}
+
                   <ul className="mt-6 flex flex-wrap gap-1.5">
                     {project.stack.map((tech) => (
                       <li key={tech} className="chip">
@@ -59,17 +81,16 @@ export const Work = () => (
                   </ul>
                 </div>
 
-                {hero && project.facts ? (
-                  <dl className="mt-8 grid flex-1 content-start gap-px self-start overflow-hidden rounded-xl border border-line bg-line lg:mt-0">
-                    {project.facts.map((fact) => (
-                      <div key={fact.label} className="bg-ink-900 px-4 py-3.5">
-                        <dt className="font-mono text-[10.5px] tracking-wider text-fg-subtle uppercase">
-                          {fact.label}
-                        </dt>
-                        <dd className="mt-1 text-sm text-fg">{fact.value}</dd>
-                      </div>
-                    ))}
-                  </dl>
+                {hero ? (
+                  <div className="relative mt-8 flex-1 lg:mt-0">
+                    <div aria-hidden className="pointer-events-none absolute inset-x-[10%] -bottom-6 h-24 rounded-full bg-accent/20 blur-3xl" />
+                    <ProjectCover
+                      project={project}
+                      priority
+                      sizes="(min-width: 1024px) 620px, 100vw"
+                      className="relative transition-transform duration-700 group-hover:-translate-y-1 lg:[transform:perspective(1600px)_rotateY(-6deg)] lg:group-hover:[transform:perspective(1600px)_rotateY(-2deg)_translateY(-4px)]"
+                    />
+                  </div>
                 ) : null}
               </div>
 
