@@ -63,7 +63,7 @@ export default async function BlogPostPage({ params }: PageProps) {
             <span>{post.readingMinutes} min read</span>
           </p>
 
-          <h1 className="mt-5 text-h2 font-semibold text-fg">{post.title}</h1>
+          <h1 className="mt-5 font-display text-h2 font-bold text-fg">{post.title}</h1>
           <p className="mt-6 text-lead text-fg-muted">{post.description}</p>
         </header>
 

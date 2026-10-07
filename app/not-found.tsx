@@ -5,7 +5,7 @@ export default function NotFound() {
   return (
     <div className="container-page flex min-h-[70vh] flex-col items-start justify-center py-32">
       <p className="eyebrow">404</p>
-      <h1 className="mt-4 text-h2 font-semibold text-fg">
+      <h1 className="mt-4 font-display text-h2 font-bold text-fg">
         This page doesn&apos;t exist
       </h1>
       <p className="mt-5 max-w-md text-lead text-fg-muted">

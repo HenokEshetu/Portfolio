@@ -51,7 +51,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
           <p className="eyebrow">
             {project.year} · {project.role}
           </p>
-          <h1 className="mt-4 max-w-3xl text-h2 font-semibold text-fg">
+          <h1 className="mt-4 max-w-3xl font-display text-h2 font-bold text-fg">
             {project.title}
           </h1>
           <p className="mt-6 max-w-2xl text-lead text-fg-muted">
@@ -108,7 +108,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
         <div className="mt-16 space-y-14">
           {project.caseStudy.map((section) => (
             <section key={section.heading}>
-              <h2 className="text-h3 font-semibold text-fg">
+              <h2 className="font-display text-h3 font-semibold text-fg">
                 {section.heading}
               </h2>
               <div className="mt-5 space-y-5">
@@ -132,7 +132,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
               href={`/work/${next.slug}`}
               className="group mt-4 flex items-center justify-between gap-6"
             >
-              <span className="text-h3 font-semibold text-fg transition-colors group-hover:text-accent">
+              <span className="font-display text-h3 font-semibold text-fg transition-colors group-hover:text-accent">
                 {next.title}
               </span>
               <ArrowUpRight

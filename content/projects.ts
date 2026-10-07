@@ -28,33 +28,111 @@ export type Project = {
 export const projects: readonly Project[] = [
   {
     slug: "cti-platform",
-    title: "Real-Time Threat Intelligence Platform",
+    title: "Real-Time Cyber Threat Intelligence Platform",
     summary:
-      "Aggregates indicators from OSINT, internal logs, and dark-web feeds, then enriches and scores them so analysts triage signal instead of noise.",
-    year: "2025",
-    role: "Backend & platform engineering",
-    stack: ["Rust", "Python", "NestJS", "GraphQL", "React", "OpenSearch"],
+      "My BSc final-year project: a STIX 2.1 threat-intelligence platform that ingests and enriches feeds, streams updates to analysts in real time, and turns indicators into Suricata IDS rules automatically.",
+    year: "2024 — 2025",
+    role: "Final-year project · lead developer",
+    stack: ["NestJS", "GraphQL", "PostgreSQL", "Redis", "OpenSearch", "React 19", "Python", "Suricata"],
     featured: true,
+    facts: [
+      { label: "Data model", value: "STIX 2.1 SDOs, SCOs and relationships" },
+      { label: "Realtime", value: "GraphQL subscriptions over WebSocket" },
+      { label: "Commits", value: "~260 of ~335 across the project repos" },
+    ],
+    links: [
+      { label: "Overview", href: "https://github.com/HenokEshetu/Real-time_Threat_Intelligence" },
+      { label: "Backend", href: "https://github.com/HenokEshetu/Real-time_Threat_Intelligence_Backend" },
+      { label: "Frontend", href: "https://github.com/HenokEshetu/Real-time_Threat_Intelligence_Frontend" },
+      { label: "Suricata bridge", href: "https://github.com/HenokEshetu/Real-time_Threat_Intelligence_Suricata" },
+    ],
     caseStudy: [
       {
         heading: "The problem",
         body: [
-          "Threat feeds are cheap to subscribe to and expensive to use. A team can ingest millions of indicators a day and still miss the one that matters, because raw IOCs arrive without context: no confidence score, no relationship to assets the organisation actually owns, and no history of whether this indicator has ever mattered before.",
-          "The goal was a platform that treats an indicator as the beginning of a question rather than the answer — something that arrives, gets enriched, gets correlated against internal telemetry, and only then competes for an analyst's attention.",
+          "Threat feeds are cheap to subscribe to and expensive to use. A team can ingest thousands of indicators a day and still miss the one that matters, because raw IOCs arrive without context: no confidence, no relationships, and no link to the controls that could act on them.",
+          "The goal was a platform where an indicator is the start of an investigation, not the end of one. It arrives, gets normalised to STIX 2.1, gets enriched and related to other objects, reaches analysts in real time, and finally becomes an enforceable detection.",
         ],
       },
       {
-        heading: "Approach",
+        heading: "Architecture",
         body: [
-          "Ingestion is a set of independent feed adapters that normalise wildly different source formats into one internal indicator model, so adding a feed never means touching the correlation logic. Each adapter is responsible for its own rate limiting and backoff, and a failure in one feed cannot stall the others.",
-          "Enrichment runs as a pipeline stage rather than at query time. By the time an indicator is searchable it already carries reputation data, first-seen and last-seen timestamps, and any links to related infrastructure. Search itself sits on OpenSearch, which keeps the analyst-facing queries fast even as the indicator corpus grows.",
-          "The API layer is GraphQL, chosen because the dashboard's views need very different shapes of the same underlying graph — an IOC detail view and a campaign overview should not require two bespoke REST endpoints each.",
+          "The backend is NestJS with Apollo GraphQL. GraphQL fits because a CTI console needs very different shapes of the same graph: an IOC detail view, a campaign overview and a knowledge-graph explorer should not each need a bespoke REST endpoint. Subscriptions over WebSocket push new and updated objects to every open console.",
+          "STIX domain and cyber-observable objects, relationships and reports live in PostgreSQL through TypeORM. Redis handles pub/sub and Bull job queues, so slow work like feed ingestion and enrichment runs off the request path. HashiCorp Vault holds third-party API keys. Authentication is JWT with Passport (including Google OAuth) and role-based access control.",
+          "Enrichment pulls context from MITRE ATT&CK, VirusTotal, Shodan, AbuseIPDB, ThreatFox and Hybrid Analysis. A separate Python bridge subscribes to new indicators, generates Suricata rules from them, hot-reloads the IDS and exposes Prometheus metrics, which turns intelligence into enforcement.",
+          "The React 19 and TypeScript console uses Apollo Client and live subscriptions to drive dashboards, geo-maps, a force-directed knowledge graph and timelines.",
         ],
       },
       {
         heading: "What I'd change",
         body: [
-          "The enrichment pipeline was built assuming feeds stay roughly the same size. A feed that suddenly grows an order of magnitude creates backpressure that surfaces as latency in the wrong place. Making enrichment stages independently scalable, rather than scaling the pipeline as a unit, is the first thing I'd revisit.",
+          "Enrichment was built assuming feeds stay roughly the same size. When one feed suddenly grows by an order of magnitude, the backpressure shows up as latency in the wrong place. Today I would put a durable log such as Kafka between ingestion and enrichment and scale each enrichment stage on its own, which is the pattern I now use in production.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "fluxa",
+    title: "Fluxa",
+    summary:
+      "A multi-tenant task and project management platform: a Rust API with first-class tenancy, RBAC and signed webhooks, plus OpenAPI-generated web and mobile clients.",
+    year: "2026",
+    role: "Independent · sole architect",
+    stack: ["Rust", "Axum", "SQLx", "PostgreSQL", "Redis", "tonic gRPC", "Next.js 16", "Flutter"],
+    featured: true,
+    facts: [
+      { label: "Clients", value: "Next.js 16 web · Flutter mobile" },
+      { label: "Contract", value: "OpenAPI-generated, diff-checked in CI" },
+      { label: "Supply chain", value: "fmt · clippy · cargo-audit · Trivy" },
+    ],
+    links: [
+      { label: "Backend", href: "https://github.com/RustyHenok/fluxa-backend" },
+      { label: "Web", href: "https://github.com/RustyHenok/fluxa-web" },
+      { label: "Mobile", href: "https://github.com/RustyHenok/fluxa-mobile" },
+    ],
+    caseStudy: [
+      {
+        heading: "Why build it",
+        body: [
+          "Task managers look simple until you add teams. Once several organisations share one deployment, every query becomes a tenancy question, every integration becomes a security boundary, and every background job needs a story for retries. Fluxa is where I explore those problems end to end, outside the constraints of my day job.",
+        ],
+      },
+      {
+        heading: "Architecture",
+        body: [
+          "The backend is Rust 2024 on Axum and Tokio, with SQLx against PostgreSQL and Redis for caching and coordination. It also exposes a tonic gRPC interface. Auth uses short-lived JWT access tokens with refresh rotation, Argon2 password hashing and Google/GitHub OAuth. Authorisation is owner/admin/member RBAC enforced per tenant, and every privileged change goes to a tenant audit log.",
+          "Side effects run through an outbox so a notification or webhook is never lost when a transaction commits. Outbound webhooks are HMAC-signed, retried with backoff and dead-lettered when they keep failing. Prometheus metrics and OpenTelemetry traces make the background workers observable.",
+          "The API contract is generated as OpenAPI and diffed in CI, so a breaking change can't ship by accident. The Next.js 16 web app uses a cookie-based backend-for-frontend, and the Flutter app (Riverpod, go_router, Dio, secure storage) consumes the same generated models.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "rusty-chess",
+    title: "Rusty Chess",
+    summary:
+      "Multiplayer chess for humans: online rated play, LAN hosting and local games. A Rust core and TLS-only networking power a Tauri 2 desktop app and a self-hostable server.",
+    year: "2026",
+    role: "Independent · sole author",
+    stack: ["Rust", "Axum", "Turso", "WebSockets/TLS", "Tauri 2", "SolidJS", "Playwright"],
+    facts: [
+      { label: "Rules engine", value: "Dependency-free, perft-verified" },
+      { label: "Ratings", value: "Glicko-2 per time control" },
+      { label: "Transport", value: "HTTPS and WSS only, never plaintext" },
+    ],
+    caseStudy: [
+      {
+        heading: "The interesting part is the network",
+        body: [
+          "Chess rules are a solved problem. Trust between a desktop client and a self-hosted server is not. Every connection is HTTPS or WSS, and the desktop WebView has no network access at all because its Content Security Policy forbids it. All traffic goes through a TLS client in the app's Rust backend.",
+          "Self-signed servers are handled like SSH: on first connection the app shows the certificate's SHA-256 fingerprint and asks the player to compare it with the host's screen. If a trusted server later presents a different certificate, the app blocks the connection and never re-trusts it silently.",
+        ],
+      },
+      {
+        heading: "Engineering",
+        body: [
+          "The workspace is split into a dependency-free rules crate (legal moves, FEN, SAN and PGN, verified with perft), a deterministic match crate (time controls, a lag-compensated server clock, Glicko-2 and pairing), a protocol crate that generates the TypeScript bindings, and an Axum server on Turso.",
+          "Passwords use Argon2id. Session tokens are stored only as SHA-256 hashes, and login, chat, WebSocket messages and per-IP connections are all rate-limited. CI runs Rust tests over real TLS, Vitest, browser end-to-end tests with Playwright, and WebDriver tests against the actual desktop binary.",
         ],
       },
     ],

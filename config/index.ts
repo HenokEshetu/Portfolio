@@ -5,26 +5,29 @@ import { profile } from "@/content/profile";
 export const siteUrl = "https://henokeshetuportfolio.vercel.app";
 
 const description =
-  "Henok Eshetu is a security engineer and full-stack developer building SIEM, threat-intelligence, and detection platforms in Rust, Go, and TypeScript.";
+  "Henok Eshetu is a Secure Systems Developer and SIEM Development Team Leader building a multi-tenant SIEM/XDR platform (UEBA, threat intelligence, agentic AI for the SOC) in Rust, Go and Python, and shipping it with DevSecOps on Kubernetes.";
 
 export const siteConfig: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${profile.name} — ${profile.role}`,
+    default: `${profile.name} — ${profile.title}`,
     template: `%s · ${profile.name}`,
   },
   description,
   keywords: [
     "Henok Eshetu",
-    "security engineer",
-    "SIEM engineering",
+    "secure systems developer",
+    "SIEM development team lead",
+    "SIEM/XDR",
+    "UEBA",
     "threat intelligence",
-    "detection engineering",
-    "penetration testing",
-    "Rust backend",
-    "Go",
-    "network security",
-    "full-stack developer",
+    "DevSecOps",
+    "Kubernetes",
+    "agentic AI SOC",
+    "Rust Axum",
+    "Go gRPC",
+    "Python FastAPI",
+    "cybersecurity",
     "Ethiopia",
   ],
   authors: [{ name: profile.name, url: "https://github.com/HenokEshetu" }],
@@ -34,12 +37,12 @@ export const siteConfig: Metadata = {
     locale: "en_US",
     url: siteUrl,
     siteName: `${profile.name} — Portfolio`,
-    title: `${profile.name} — ${profile.role}`,
+    title: `${profile.name} — ${profile.title}`,
     description,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${profile.name} — ${profile.role}`,
+    title: `${profile.name} — ${profile.title}`,
     description,
   },
   robots: {

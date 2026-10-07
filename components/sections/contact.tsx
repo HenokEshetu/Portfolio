@@ -14,7 +14,7 @@ type Status =
   | { state: "error"; message: string };
 
 const FIELD_CLASS =
-  "w-full rounded-lg border border-line bg-ink-900 px-3.5 py-3 text-[15px] text-fg " +
+  "w-full rounded-lg border border-line bg-ink-950/60 px-3.5 py-3 text-[15px] text-fg " +
   "placeholder:text-fg-subtle transition-colors hover:border-line-strong " +
   "focus:border-accent-dim focus:outline-none focus-visible:outline-none";
 
@@ -57,26 +57,35 @@ export const Contact = () => {
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="scroll-mt-24 border-t border-line py-16 sm:py-24"
+      className="relative scroll-mt-24 overflow-hidden py-20 sm:py-28"
     >
+      <div aria-hidden className="grid-backdrop pointer-events-none absolute inset-0 -z-10 rotate-180" />
       <div className="container-page grid gap-12 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-5">
           <Reveal>
-            <p className="eyebrow">Contact</p>
+            <div className="flex items-center gap-3">
+              <p className="eyebrow">
+                <span className="text-fg-subtle">07 /</span> Contact
+              </p>
+              <span aria-hidden className="h-px w-16 bg-linear-to-r from-accent/60 to-transparent" />
+            </div>
+            <p className="mt-5 font-mono text-[13px] text-fg-subtle">
+              <span className="text-accent">❯</span> ./contact.sh --secure
+            </p>
             <h2
               id="contact-heading"
-              className="mt-3 text-h2 font-semibold text-fg"
+              className="mt-2 font-display text-h2 font-bold text-fg"
             >
-              Let&apos;s talk
+              Let&apos;s build something <span className="text-gradient">hard to break.</span>
             </h2>
             <p className="mt-5 max-w-md text-lead text-fg-muted">
-              Security engineering, detection platforms, or backend systems that
-              need to hold up under load — I&apos;d be glad to hear about it.
+              Security engineering roles, detection platforms, DevSecOps, or backend
+              systems that need to hold up under load. I&apos;d be glad to hear about any of them.
             </p>
 
             <a
               href={`mailto:${profile.email}`}
-              className="group mt-8 inline-flex items-center gap-2 text-[15px] font-medium text-accent"
+              className="group mt-8 inline-flex items-center gap-2 font-mono text-[15px] font-medium text-accent"
             >
               {profile.email}
               <ArrowRight
@@ -93,19 +102,23 @@ export const Contact = () => {
                   target={social.href.startsWith("http") ? "_blank" : undefined}
                   rel="noreferrer noopener"
                   aria-label={social.name}
-                  className="rounded-lg border border-line bg-ink-850 p-2.5 text-fg-subtle transition-colors hover:border-line-strong hover:text-fg"
+                  className="rounded-xl border border-line-strong bg-ink-850 p-3 text-fg-subtle transition-colors hover:border-accent-dim hover:text-accent"
                 >
                   <SocialIcon icon={social.icon} className="size-[18px]" />
                 </a>
               ))}
             </div>
+
+            <p className="mt-8 font-mono text-[11.5px] text-fg-subtle">
+              <span className="text-accent">#</span> usually replies within a day · EAT (UTC+3)
+            </p>
           </Reveal>
         </div>
 
         <div className="lg:col-span-7">
           <Reveal delay={1}>
             {status.state === "sent" ? (
-              <div className="card-surface flex min-h-70 flex-col items-center justify-center p-10 text-center">
+              <div className="terminal flex min-h-70 flex-col items-center justify-center p-10 text-center">
                 <span className="grid size-11 place-items-center rounded-full border border-accent-dim bg-accent/10">
                   <Check className="size-5 text-accent" aria-hidden />
                 </span>
@@ -120,13 +133,22 @@ export const Contact = () => {
               <form
                 onSubmit={handleSubmit}
                 noValidate
-                className="card-surface space-y-5 p-6 sm:p-8"
+                className="terminal relative overflow-hidden"
               >
+                <div className="flex items-center gap-2 border-b border-line px-4 py-2.5">
+                  <span className="size-2.5 rounded-full bg-danger/70" />
+                  <span className="size-2.5 rounded-full bg-warn/70" />
+                  <span className="size-2.5 rounded-full bg-accent/70" />
+                  <span className="ml-2 font-mono text-[11px] text-fg-subtle">
+                    new-message — encrypted in transit (TLS)
+                  </span>
+                </div>
+                <div className="space-y-5 p-6 sm:p-8">
                 <div className="grid gap-5 sm:grid-cols-2">
                   <div>
                     <label
                       htmlFor="name"
-                      className="mb-2 block text-sm font-medium text-fg"
+                      className="mb-2 block font-mono text-[12px] text-fg-muted"
                     >
                       Name
                     </label>
@@ -144,7 +166,7 @@ export const Contact = () => {
                   <div>
                     <label
                       htmlFor="email"
-                      className="mb-2 block text-sm font-medium text-fg"
+                      className="mb-2 block font-mono text-[12px] text-fg-muted"
                     >
                       Email
                     </label>
@@ -163,7 +185,7 @@ export const Contact = () => {
                 <div>
                   <label
                     htmlFor="message"
-                    className="mb-2 block text-sm font-medium text-fg"
+                    className="mb-2 block font-mono text-[12px] text-fg-muted"
                   >
                     Message
                   </label>
@@ -199,7 +221,7 @@ export const Contact = () => {
                 <button
                   type="submit"
                   disabled={status.state === "sending"}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-accent px-5 py-3 text-sm font-semibold text-ink-950 transition-[background-color,transform] hover:bg-accent-bright active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+                  className="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
                 >
                   {status.state === "sending" ? (
                     <>
@@ -216,6 +238,7 @@ export const Contact = () => {
                     </>
                   )}
                 </button>
+                </div>
               </form>
             )}
           </Reveal>

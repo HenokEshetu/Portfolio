@@ -1,11 +1,11 @@
 {
   "name": "henok-eshetu-portfolio",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "private": true,
-  "description": "Portfolio of Henok Eshetu — security engineer and full-stack developer.",
+  "description": "Portfolio of Henok Eshetu \u2014 Secure Systems Developer and SIEM Development Team Leader.",
   "author": {
     "name": "Henok Eshetu",
-    "email": "henok.eshetu.2025@proton.me",
+    "email": "henokeshetu2024@gmail.com",
     "url": "https://github.com/HenokEshetu"
   },
   "license": "MIT",

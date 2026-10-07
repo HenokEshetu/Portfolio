@@ -16,7 +16,7 @@ export default function BlogIndexPage() {
       <div className="container-page">
         <Reveal>
           <p className="eyebrow">Writing</p>
-          <h1 className="mt-3 text-h2 font-semibold text-fg">Blog</h1>
+          <h1 className="mt-3 font-display text-h2 font-bold text-fg">Blog</h1>
           <p className="mt-5 max-w-2xl text-lead text-fg-muted">
             Notes on threat intelligence, network security, cryptography, and
             the practice of building systems that hold up.
@@ -45,7 +45,7 @@ export default function BlogIndexPage() {
                   </div>
 
                   <div className="sm:col-span-9">
-                    <h2 className="text-h3 font-semibold text-fg transition-colors group-hover:text-accent">
+                    <h2 className="font-display text-h3 font-semibold text-fg transition-colors group-hover:text-accent">
                       {post.title}
                     </h2>
                     <p className="mt-3 max-w-[62ch] text-[15px] leading-relaxed text-fg-muted">
